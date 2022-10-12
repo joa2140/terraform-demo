@@ -1,7 +1,19 @@
+# Local Variables to use throughout this file, local.pipeline_name for example
 locals {
   pipeline_name = "${var.pipeline_prefix}_${var.environment}_${var.release_id}"
 }
 
+# template_file data source has been replaced with templatefile function: https://www.terraform.io/language/functions/templatefile?_ga=2.138153781.48236333.1665491213-1157847542.1664466017
+# templatefile(path, vars)
+# The "vars" argument must be a map
+
+# templatefile("${path.module}/templates/stage.tftpl")", {
+#    serviceName = var.services[count.index],
+#    envName = var.environment,
+#    infraName = var.infradef,
+#    parallel = count.index != 0,
+#    workflowName = var.workflow_name
+#  })
 data "template_file" "stage" {
   count = "${length(var.services)}"
 
